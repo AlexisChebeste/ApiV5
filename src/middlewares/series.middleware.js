@@ -1,8 +1,8 @@
-const { series } = require('../controllers/series.controller')
+const { Series } = require('../models')
 const middleware = {}
-const validateIdSerie = (req, res, next)=>{
+const validateIdSerie = async (req, res, next)=>{
     const id = req.params.id
-    const serie = series.find( serie => serie.id == id)
+    const serie = await Series.findByPk(id)
     if (!serie)
         return res.status(404).json({mensaje: `El ${id} no exite.`})
     next()

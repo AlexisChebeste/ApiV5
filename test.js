@@ -1,15 +1,11 @@
-const numeros = [1, 3, 6, 7] 
+const serieSchema = require('./src/schemas/series.schema')
+
+const resultado = serieSchema.validate({
+    nombre: "a",
+    plataforma: 'Star+',
+    disponible: true
+}, {abortEarly: false})
 
 
-const sumar = (...arg)=> {
-    let acum = 0
-    arg.forEach(e=> acum += e)
-    return acum
-}
-
-console.log(sumar(...numeros))
-
-console.log(Math.min(...numeros))
-
-
+console.log(resultado.error.details)
 
