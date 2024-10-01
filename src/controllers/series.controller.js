@@ -1,4 +1,4 @@
-const {Series}= require ('../models')
+const {Series, Temporadas, Capitulo}= require ('../models')
 const controller = {}
 
 const getAllSeries = async (req, res)=>{
@@ -9,7 +9,17 @@ controller.getAllSeries = getAllSeries
 
 const getSerieById= async (req, res)=>{
     const id = req.params.id
-    const serie = await Series.findByPk(id)
+    const serie = await Series.findOne({
+        where: {id}, 
+        include: {
+            model: Temporadas,
+            as: 'seasons',
+            include: {
+                model: Capitulo,
+                as:'episodios'
+            }
+        }
+    })
     res.status(200).json(serie)
 }
 controller.getSerieById = getSerieById
