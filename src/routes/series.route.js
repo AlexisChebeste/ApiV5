@@ -5,6 +5,7 @@ const {seriesMiddleware} = require('../middlewares')
 const schemaValidator = require('../middlewares/schemaValidator')
 const serieSchema = require('../schemas/series.schema')
 const temporadaSchema = require('../schemas/temporadas.schema')
+const controller = require('../controllers/series.controller')
 const route = Router()
 
 route.get('/series', seriesController.getAllSeries )
@@ -31,5 +32,17 @@ route.post('/series/:id/temporadas',
 route.put('/series/:id', 
     seriesMiddleware.validateIdSerie, 
     seriesController.updateSerie)
+
+
+route.post('/series/:id/actores',
+    seriesMiddleware.validateIdSerie,
+    controller.addActorToSerie
+)
+
+route.post('/series/:id/actor',
+    seriesMiddleware.validateIdSerie,
+    controller.addOrFindActorToSerie
+)
+
 
 module.exports = route
